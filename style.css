@@ -1,12 +1,109 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url(minecraft.ttf);
+}
+
 body {
     background-image: url("bg.png");
+    background-repeat: no-repeat;
+    object-fit: cover;
+    font-family: 'MyCustomFont', sans-serif;
+  }
+  
+ 
+  .dropdown {
+    position: relative;
+  }
+  
+  /* Style the dropdown button */
+  .dropbtn {
+    background-color: #e6dfcf;
+    color: black;
+    padding: 20px;
+    font-size: 25px;
+    font-family: 'MyCustomFont', sans-serif;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Dropdown content */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+  
+  /* Links inside dropdown content */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {
+    background-color: #f1f1f1
+  }
+  
+  /* Show the dropdown content on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Change background color of dropdown button on hover */
+  .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+ 
   }
 
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    border: 1px solid #e7e7e7;
-    background-color: #f3f3f3;
+  .turun {
+    position: relative;
+    margin-left: auto;
+  }
+
+  /* Style the dropdown button */
+  .turunbtn {
+    background-color: #e6dfcf;
+    color: black;
+    padding: 20px;
+    font-size: 25px;
+    font-family: 'MyCustomFont', sans-serif;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Dropdown content */
+  .turun-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+  
+  /* Links inside dropdown content */
+  .turun-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .turun-content a:hover {
+    background-color: #f1f1f1
+  }
+  
+  /* Show the dropdown content on hover */
+  .turun:hover .turun-content {
+    display: block;
+  }
+  
+  /* Change background color of dropdown button on hover */
+  .turun:hover .turunbtn {
+    background-color: #3e8e41;
+ 
   }
