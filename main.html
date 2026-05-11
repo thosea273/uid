@@ -9,13 +9,44 @@
 </head>
 <body>
 
-        <button class="dropbtn">SHOP ▼</button>
-        <div class="dropdown-content">
-          <a href="#">Tops</a>
-          <a href="#">Bottoms</a>
-          <a href="#">Accesories</a>
-        </div>
-      </div>
+<!--nav--->
+<nav class="nav">
+  <div class="nav__left">
+      <button class="nav__btn" onclick="goto('products')">SHOP ▼</button>
+      <button class="nav__btn">FAQ ▼</button>
+    </div>
+      <div class="nav__logo" onclick="goto('home')">(hound)</div>
+      <div class="nav__right">
+          <span class="nav__country">AUSTRALIA ▼</span>
+          <button class=" nav__icon" aria-label="Search">🔎</button>
+          <button class=" nav__icon" aria-label="Account"></button>
+          <button class="nav__vart" onclick="openCartDrawer()" aria-label="Open cart">
+            <span class="nav__cart-badge" id="cart-badge">2</span>
+            </button>
+          </div>
+        </nav>
+      
+  <!--home--->
+<main class="page active" id="page-home">
+  <div class="hero">
+    <img src="bg.png" alt="Hound World Map"/>
+    <button class="hotspot" style="left:4.2%; top: 35.7%;" onclick="goto('products')">SHOP</button>
+    <button class="hotspot" style="left:30.6%; top: 25.6%;" onclick="goto('products')">COLLECTIONS</button>
+    <button class="hotspot" style="left:59.4%; top: 37.1%;">FAQ</button>
+    <button class="hotspot" style="left:2.8%; top: 44.5%;" onclick="goto('products')">CONTINUE SHOPPING</button>
+  </div>
+</main>
+
+  <!--product page--->
+  <main class="page" id="page-products">
+    
+
+
+  </main>
+
+
+
+
 
       <div class="turun">
         <button class="turunbtn">FAQ ▼</button>
@@ -25,7 +56,7 @@
           <a href="#">Accesories</a>
         </div>
       </div>
-   
+    </nav>
     <script src="script.js"></script>
 
 

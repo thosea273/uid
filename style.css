@@ -3,6 +3,23 @@
   src: url(minecraft.ttf);
 }
 
+:root {
+--cream: #e8e0d0;
+--dark: #1a1a1a;
+--red: #d93025;
+--muted: rgba(0,0,0,0.12);
+--pixel-font: 'Press Start 2P'. monospace;
+--mono-font: 'Space Mono' monospace:
+}
+
+/*--reset---/
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box;}
+html, body {overflow-x: hidden;}
+body {font-family: var(--body-font); background: var(--cream); color: var (--dark);}
+img {display: block;}
+button {font-family: inherit; cursoe: pointer;}
+
+
 body {
     background-image: url("bg.png");
     background-repeat: no-repeat;
