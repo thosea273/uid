@@ -54,11 +54,45 @@
 <footer class="footer">
   <div class="footer__newsletter">
     <p>Recieve updates first on offers, releases and more</p>
-  </main>
+  <div class="newsletter-form">
+    <input type="email" placeholder="Email address"/>
+    <button type="button">SUBSCRIBE</button>
+  </div>
+</div>
+<div class="footer__links">
+  <p class="footer__links-title">ABOUT</p>
+  <a>Our Story</a><a>Sustainability</a><a>Careers</a>
+  </div>
+</footer>
+<p class="footer-copy">Copyright &copy; 2026 Hound Archives.</p>
+</main>
+
+<!--product page details--->
+<main class="page" id="page-detail">
+  <div class="detail__layout">
+    <div class="detail__images" id="detail-images"></div>
+    <div class="detail__info">
+      <button class="back-btn" onclick="goto('products')">← BACK</button>
+    <span class="preorder-badge" id="detail-badge">PRE-ORDER</span>
+    <h1 class="detail__title" id="detail-title"></h1>
+    <p class="detail__price" id="detail-price"></p>
+    <div class="detail__desc" id="detail-desc"></div>
+    <div class="swatch-section">
+      <p class="swatch-label">COLOR<span id="swatch-label-text"></span></p>
+        <div class="swatches" id="detail-swatches"></div>
+      </div>
+      <div class="swatch-section">
+        <p class="swatch-label">SIZE</p>
+        <div class="size-options" id="detail-sizes"></div>
+      </div>
+      <button class="preorder-btn" onclick="addToCartFromDetail()">PRE-ORDER NOW</button>
+        </div>
+      </div>
+    </main>
 
 
 
-
+    
 
       <div class="turun">
         <button class="turunbtn">FAQ ▼</button>
