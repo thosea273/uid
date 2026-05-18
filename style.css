@@ -101,4 +101,8 @@ font-family: var(--mono-font); font-weight: 700; pointer-events: none;
 .products__toolbar{display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid var(--dark); border-bottom:1.5px solid var(--dark); padding: 8px ;}
 
 
- 
+ /*--cart---*/
+ .cart-overlay {display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.50);}
+ .cart-overlay.open {display: flex;}
+ .cart-backdrop {flex: 1; background: rgba(0,0,0,0.12);}
+ .cart-drawer {width: 420px; background: #e8e0d0; display: flex;flex-direction: column; box-shadow: -6px 0 28px rgba(0,0,0,0.12); max-height: 100vh;}

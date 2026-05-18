@@ -26,8 +26,8 @@
           <span class="nav__country">AUSTRALIA ▼</span>
           <button class="nav__icon" aria-label="Search">🔎</button>
           <button class="nav__icon" aria-label="Account">👤</button>
-          <button class="nav__cart" onclick="openCartDrawer()" aria-label="Open cart">
-            <span class="nav__cart-badge" id="cart-badge">🛒</span>
+          <button class="nav__cart" onclick="openCartDrawer()"> 🛒
+            <span class="nav__cart-badge" id="cart-badge">0</span>
             </button>
           </div>
     </nav>
@@ -142,22 +142,26 @@
       <div class="cart-drawer__header">
       <h2 class="cart-drawer__title">YOUR CART</h2>
       <button class="cart-drawer__close" onclick="closeCartDrawer()">x</button>
+      </div>
       <div class="cart-drawer__shipping">
       Spend $2.00 AUD more for free shipping
       <div class="shipping-bar"><div class="shipping-bar-fill"></div>
+    </div>
+  </div>
       <div class="cart-drawer__items" id="cart-items"></div>
       <div class="cart-drawer__footer">
       <div class="cart-subtotal">
       <span class="cart-subtotal__label">Subtotal</span>
       <span class="cart-subtotal__amount" id="cart-total">...</span>
       <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
-      <div class="cart-actios">
+    </div>
+      <div class="cart-actions">
         <button class="btn-view-cart" onclick="closeCartDrawer()">VIEW CART</button>
+      
         <button class="btn-co" onclick="goToCheckout()">CHECKOUT</button>
 
+          </div>
       </div>
-
-
     </div>
 </div>
 
