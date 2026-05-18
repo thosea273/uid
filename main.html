@@ -97,7 +97,7 @@
     </main>
 
     <!--product page checkout--->
-    <main class="page" id="page-products"></main>
+    <main class="page" id="page-checkout">
       <div class="products__header">
         <p class="breadcrumb"><span onclick="goto('home')">HOME</span>/ ALL PRODUCTS</p>
         <h1 class="products__title">ALL PRODUCTS</h1>
@@ -111,7 +111,7 @@
   </div>
   <div class="product-grid" id="product-grid"></div>
   <footer class="footer">
-    <div class="footer__newsletter"
+    <div class="footer__newsletter">
     <p>Receive updates first on offers, releases and more.</p>
     <div class="newsletter-form">
       <input type="email" placeholder="Email address" />
@@ -135,14 +135,30 @@
 </div>
 </main>
 
-<!--half cart--->
-<div class="cart-overlay" id="cart-overlay">
+  <!--half cart--->
+  <div class="cart-overlay" id="cart-overlay">
+    <div class="cart-backdrop" onclick="closeCartDrawer()"></div>
+    <div class="cart-drawer">
+      <div class="cart-drawer__header">
+      <h2 class="cart-drawer__title">YOUR CART</h2>
+      <button class="cart-drawer__close" onclick="closeCartDrawer()">x</button>
+      <div class="cart-drawer__shipping">
+      Spend $2.00 AUD more for free shipping
+      <div class="shipping-bar"><div class="shipping-bar-fill"></div>
+      <div class="cart-drawer__items" id="cart-items"></div>
+      <div class="cart-drawer__footer">
+      <div class="cart-subtotal">
+      <span class="cart-subtotal__label">Subtotal</span>
+      <span class="cart-subtotal__amount" id="cart-total">...</span>
+      <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
+      <div class="cart-actios">
+        <button class="btn-view-cart" onclick="closeCartDrawer()">VIEW CART</button>
+        <button class="btn-co" onclick="goToCheckout()">CHECKOUT</button>
+
+      </div>
 
 
-
-
-
-  
+    </div>
 </div>
 
 
@@ -160,7 +176,7 @@
 
 
 
-
+  <button class="chatbot">💬</button>
 
    
     <script src="script.js"></script>
