@@ -12,7 +12,7 @@
 <!--nav--->
 <nav class="nav">
   <div class="nav__left">
-      <button class="nav__btn" onclick="goto('products')">SHOP ▼</button>
+      <button class="nav__btn" onclick="goto('products')" >SHOP ▼</button>
       <button class="nav__btn">FAQ ▼</button>
     </div>
 
@@ -27,7 +27,7 @@
           <button class="nav__icon" aria-label="Search">🔎</button>
           <button class="nav__icon" aria-label="Account">👤</button>
           <button class="nav__cart" onclick="openCartDrawer()" aria-label="Open cart">
-            <span class="nav__cart-badge" id="cart-badge"> 🛒</span>
+            <span class="nav__cart-badge" id="cart-badge">🛒</span>
             </button>
           </div>
     </nav>
@@ -36,10 +36,10 @@
 <main class="page active" id="page-home">
   <div class="hero">
     <img src="bg.png" alt="Hound World Map"/>
-    <button class="hotspot" style="left:8%; top:33%;" onclick="goto('products')">SHOP</button>
-    <button class="hotspot" style="left:30.2%; top:27.8%;" onclick="goto('products')">COLLECTIONS</button>
-    <button class="hotspot" style="left:58.8%; top:37.4%;">FAQ</button>
-    <button class="hotspot" style="right:3.5%; top:47.2%;" onclick="goto('products')">CONTINUE SHOPPING</button>
+    <button class="hotspot" style="left:8%; top:29%;" onclick="goto('products')">SHOP</button>
+    <button class="hotspot" style="left:42.5%; top:29%;" onclick="goto('products')">COLLECTIONS</button>
+    <button class="hotspot" style="left:70%; top:48.5%;">FAQ</button>
+    <button class="hotspot" style="left: 90%; top:67.5%;" onclick="goto('products')">CONTINUE<br>SHOPPING</button>
   </div>
 </main>
 
@@ -126,8 +126,38 @@
   <p class="footer-copy">Copyright &copy; 2026 Hound Archives.</p>
   </main>
 
+<!--product page confrim--->
+  <main class="page" id="page-confirm">
+    <div class="confirm-wrap">
+      <h1 class="confirm_title">ORDER<br>CONFIRMED!</h1>
+      <p class="confirm__sub"> Order #12378617263 - Confirmed </p>
+      <button class="btn-back-order" onclick="goto('order')">Go To Your Order</button>
+</div>
+</main>
 
-    
+<!--half cart--->
+<div class="cart-overlay" id="cart-overlay">
+
+
+
+
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

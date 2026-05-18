@@ -65,21 +65,22 @@ font-family: var(--mono-font); font-weight: 700; pointer-events: none;
 
 /*--home---*/
 #page-home {
-  min-height: unset;
   height: 100vh;
+  overflow: hidden;
 }
 
 .hero {
   position: relative;
   width: 100%;
-  aspect-ratio: 1440 / 1024;
+  height: calc(100vh - 56px);
+  overflow: hidden;
 }
 
 .hero img {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
 }
  
 .hotspot {
