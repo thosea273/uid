@@ -25,7 +25,7 @@ button {font-family: inherit; cursor: pointer;}
 /*--pages---*/
 .page {display: none; min-height: 100vh; flex-direction: column; animation: fadeIn 0.25s ease;}
 .page.active {display: flex;}
-@keyframes fadeIn {from {opacity:0;} to {opacity:1;} }
+
 
 /*--nav---*/
 .nav{
@@ -52,9 +52,9 @@ text-transform: uppercase; transition: opacity var(--ease);
 
 .nav__btn:hover { opacity: 0.6; }
 .nav__country { font-family: var(--mono-font); font-size: 11px; font-weight: 700; letter-spacing: 1px; }
-.nav__icon { background: none; border: none; font-size: 16px; transition: transform var(--ease); }
+.nav__icon { background: none; border: none; font-size: 16px; }
 .nav__icon:hover { transform: scale(1.15); }
-.nav__cart { position: relative; background: none; border: none; font-size: 18px; transition: transform var(--ease); }
+.nav__cart { position: relative; background: none; border: none; font-size: 18px;}
 .nav__cart:hover { transform: scale(1.1); }
 .nav__cart-badge { position: absolute; top: -5px; right: -7px;
 background: var(--red); color: #fff;
@@ -64,7 +64,7 @@ font-family: var(--mono-font); font-weight: 700; pointer-events: none;
 }
 
 /*--home---*/
-#page-home {
+.page-home {
   height: 100vh;
   overflow: hidden;
 }
@@ -99,6 +99,15 @@ font-family: var(--mono-font); font-weight: 700; pointer-events: none;
 .breadcrumb {font-size: 11px; letter-spacing: 1px; margin-bottom: 12px; font-family: monospace; cursor: pointer; text-decoration: underline;}
 .products__title{font-family: 'MyCustomFont'; font-size: 28px; letter-spacing: 2px; margin-bottom: 20px;}
 .products__toolbar{display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid var(--dark); border-bottom:1.5px solid var(--dark); padding: 8px ;}
+.products__toolbar-left{display: flex; gap:16px; align-items: center; border-top: 1.5px solid; border-bottom:}
+.showing-count{font-size:11px; font-family: monospace; opacity:0.6;}
+.filter-btn { font-family: monospace; font-size: 11px; font-weight: 700; border: 1.5px; background: none; padding: 6px 14px; letter-spacing: 1px;}
+
+
+
+
+
+
 
 
  /*--cart---*/
