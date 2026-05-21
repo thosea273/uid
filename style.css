@@ -95,19 +95,6 @@ font-family: 'MyCustomFont'; font-weight: 700; pointer-events: none;
   white-space: nowrap;
   cursor: pointer;
 }
-.breadcrumb {font-size: 11px; letter-spacing: 1px; margin-bottom: 12px; font-family: monospace; cursor: pointer; text-decoration: underline;}
-.products__title{font-family: 'MyCustomFont'; font-size: 28px; letter-spacing: 2px; margin-bottom: 20px;}
-.products__toolbar{display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid var(--dark); border-bottom:1.5px solid var(--dark); padding: 8px ;}
-.products__toolbar-left{display: flex; gap:16px; align-items: center; border-top: 1.5px solid; border-bottom:}
-.showing-count{font-size:11px; font-family: monospace; opacity:0.6;}
-.filter-btn { font-family: monospace; font-size: 11px; font-weight: 700; border: 1.5px; background: none; padding: 6px 14px; letter-spacing: 1px;}
-
-
-
-
-
-
-
 
  /*--cart popup---*/
  .cart-overlay {display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.50);}
@@ -151,3 +138,19 @@ font-family: 'MyCustomFont'; font-weight: 700; pointer-events: none;
  .btn-view-cart:hover{ background: var(--dark); color:#e8e0d0; }
  .btn-checkout{ flex: 1; background: var(--dark); color: #e8e0d0; border: 1.5px solid var(--dark); font-family: 'MyCustomFont'; font-size: 12px; font-weight: 700; padding: 14px; letter-spacing: 1px; transition: opacity var(--ease); }
  .btn-checkout:hover{ opacity: 0.82; }
+
+  /*--product page---*/
+.breadcrumb {font-size: 11px; letter-spacing: 1px; margin-bottom: 12px; font-family: monospace; cursor: pointer; text-decoration: underline;}
+.products__title{font-family: 'MyCustomFont'; font-size: 28px; letter-spacing: 2px; margin-bottom: 20px;}
+.products__toolbar{display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid var(--dark); border-bottom:1.5px solid var(--dark); padding: 8px ;}
+.products__toolbar-left{display: flex; gap:16px; align-items: center; border-top: 1.5px solid; border-bottom:}
+.showing-count{font-size:11px; font-family: monospace; opacity:0.6;}
+.filter-btn { font-family: monospace; font-size: 11px; font-weight: 700; border: 1.5px; background: none; padding: 6px 14px; letter-spacing: 1px;}
+.filter-btn:hover {background: var(--dark); color: #e8e0d0;}
+
+.sort-btn { font-family: var(--mono-font); font-size: 11px; font-weight: 700; background: none; border: none; letter-spacing: 1px; }
+
+
+
+
+
