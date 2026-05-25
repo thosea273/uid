@@ -24,13 +24,18 @@
     
     <div class="nav__right">
           <span class="nav__country">AUSTRALIA ▼</span>
-          <button class="nav__icon" aria-label="Search">🔎</button>
+          <button class="nav__icon" aria-label="Search" onclick="toggleSearch()">🔎</button>
           <button class="nav__icon" aria-label="Account">👤</button>
           <button class="nav__cart" onclick="openCartDrawer()"> 🛒
             <span class="nav__cart-badge" id="cart-badge">0</span>
             </button>
           </div>
     </nav>
+
+    <div class="search-bar" id="search-bar">
+      <input type="text" id="search-input" placeholder="SEARCH FOR..." oninput="searchProducts()" />
+      <button onclick="toggleSearch()">✕</button>
+    </div>
       
   <!--home--->
 <main class="page active" id="page-home">
@@ -84,7 +89,7 @@
     <p class="detail__price" id="detail-price"></p>
     <div class="detail__desc" id="detail-desc"></div>
     <div class="swatch-section">
-      <p class="swatch-label">COLOR<span id="swatch-label-text"></span></p>
+      <p class="swatch-label" <span id="swatch-label-text"></span></p>
         <div class="swatches" id="detail-swatches"></div>
       </div>
       <div class="swatch-section">
@@ -96,35 +101,92 @@
       </div>
     </main>
 
-    <!--product page checkout--->
-    <main class="page" id="page-checkout">
-      <div class="products__header">
-        <p class="breadcrumb"><span onclick="goto('home')">HOME</span>/ ALL PRODUCTS</p>
-        <h1 class="products__title">ALL PRODUCTS</h1>
-        <div class="products__toolbar">
-        <div class="products__toolbar-left">
-          <button class="filter-btn">FILTER ▼</button>
-          <span class="showing-count">SHOWING 8/8 PRODUCTS</span>
+  <!--product page checkout--->
+  <main class="page" id="page-checkout">
+    <div class="checkout__layout">
+      <div class="checkout__form-side">
+      <h1 class="checkout__title">CHECKOUT</h1>
+      <div class="form-section">
+        <p class="form-section__title">CONTACT</p>
+        <div class="form-row">
+        <div class="form-field">
+        <label>Email</label>
+        <input type="email" placeholder="hound@gmail.com" />
+        </div>
+      </div>
     </div>
-    <button class="sort-btn">ALPHABETICALLY A-Z ▼</button>
+      <div class="form-section">
+      <p class="form-section__title">SHIPPING ADDRESS</p>
+      <div class="form-row">
+        <div class="form-field">
+        <label>First name</label>
+        <input type="text" />
+      </div>
+        <div class="form-field">
+          <label>Last name</label>
+            <input type="text" />
+          </div>
+        </div>
+        <div class="form-row">
+        <div class="form-field">
+        <label>Address</label>
+        <input type="text" />
+        </div>
+      </div>
+        <div class="form-row">
+        <div class="form-field">
+        <label>City</label>
+        <input type="text" />
+        </div>
+        <div class="form-field">
+        <label>Postcode</label>
+        <input type="text" />
+      </div>
     </div>
   </div>
-  <div class="product-grid" id="product-grid"></div>
-  <footer class="footer">
-    <div class="footer__newsletter">
-    <p>Receive updates first on offers, releases and more.</p>
-    <div class="newsletter-form">
-      <input type="email" placeholder="Email address" />
-      <button type="button">SUBSCRIBE</button>
+        <div class="form-section">
+        <p class="form-section__title">PAYMENT</p>
+        <div class="form-row">
+        <div class="form-field">
+        <label>Card number</label>
+        <input type="text" placeholder="1234 5678 9012 3456" />
+        </div>
+      </div>
+        <div class="form-row">
+        <div class="form-field">
+        <label>Expiry</label>
+        <input type="text" placeholder="MM / YY" />
+        </div>
+        <div class="form-field">
+        <label>CVV</label>
+        <input type="text" placeholder="123" />
+        </div>
+      </div>
+    </div>
+    
+    <button class="btn-pay" onclick="placeOrder()">PAY NOW</button>
+    </div>
+    
+    <div class="checkout__summary-side">
+    <p class="summary-section-title">ORDER SUMMARY</p>
+    <div id="checkout-summary-items"></div>
+    <div class="summary-totals">
+      <div class="summary-row">
+          <span>Subtotal</span>
+            <span id="summary-subtotal">$0.00 AUD</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+          <span>Free</span>
+        </div>
+      <div class="summary-row summary-row--total">
+      <span>Total</span>
+      <span id="summary-total">$0.00 AUD</span>
+      </div>
     </div>
   </div>
-  <div class="footer__links">
-    <p class="footer__links-title">ABOUT</p>
-    <a>Our Story</a><a>Sustainability</a><a>Careers</a>
-  </div>
-</footer>
-  <p class="footer-copy">Copyright &copy; 2026 Hound Archives.</p>
-  </main>
+</div>
+</main>
 
 <!--product page confrim--->
   <main class="page" id="page-confirm">
@@ -158,7 +220,7 @@
       <div class="cart-actions">
         <button class="btn-view-cart" onclick="closeCartDrawer()">VIEW CART</button>
       
-        <button class="btn-co" onclick="goToCheckout()">CHECKOUT</button>
+        <button class="btn-checkout" onclick="goToCheckout()">CHECKOUT</button>
 
           </div>
       </div>
