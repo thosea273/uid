@@ -241,7 +241,7 @@ font-family: 'MyCustomFont'; font-weight: 700; pointer-events: none;
 .preorder-badge { display: inline-block; border: 1.5px solid var(--dark); font-family: monospace; font-size: 10px; font-weight: 700; padding: 4px 10px; letter-spacing: 2px; align-self: flex-start; }
 .detail__title {font-family: var(--pixel-font); font-size: 26px; line-height: 1.45; letter-spacing: 2px;}
 .detail__price {font-family: monospace; font-size: 20px; font-weight: 700; }
-.detail__desc {font-size: 13px; line-height: 1.75; font-family: monospace; font-weight: ;}
+.detail__desc {font-size: 13px; line-height: 1.75; font-family: monospace; font-weight: 500;}
 .detail__desc ul {margin-top: 8px; padding-left: 20px;}
 .detail__desc li { margin-bottom: 5px; font-size: 12px;}
 .swatch-section {display: flex; flex-direction: column; gap: 10px; }
