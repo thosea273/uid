@@ -9,7 +9,7 @@ function updateCartBadge() {
   for (let i = 0; i < cart.length; i++) {
     total = total + cart[i].quantity;
   }
-  badge.textContent = total;
+  badge.textContent = total; /*go through the cart and add up all the quantities*/
 }
 
 function openCartDrawer() {
@@ -219,9 +219,12 @@ const PRODUCTS= [
             ],
     
             swatches: [
-            {color: "#232325", label: "Onyx Black"},
+            {color: "#ffe5e7", label: "Maya Pink", images:[ "six.png",
+              "pinkback.png",
+              "pinkfrontcloseup.png",
+              "pinkbackcloseup.png",]},
             {color: "#343526", label: "Moss"},
-            {color: "#ffe5e7", label: "Maya Pink"},
+            {color: "#232325", label: "Onyx Black"},
             {color: "#ffffff", label: "Quartz White"},
             ],
             sizes: ["XS", "S", "M", "L"],
