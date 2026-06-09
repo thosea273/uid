@@ -13,7 +13,10 @@
 <nav class="nav">
   <div class="nav__left">
       <button class="nav__btn" onclick="goto('products')" >SHOP ▼</button>
-      <button class="nav__btn">FAQ ▼</button>
+      <div class="nav__dropdown-menu">
+        <button onclick="filterByCategory('tops')">TOPS</button>
+        <button onclick="filterByCategory('jewellery')">JEWELLERY</button>
+      </div>
     </div>
 
     <div class="nav__logo" onclick="goto('home')">
@@ -33,7 +36,7 @@
     </nav>
 
     <div class="search-bar" id="search-bar">
-      <input type="text" id="search-input" placeholder="SEARCH FOR..." oninput="searchProducts()" />
+      <input type="text" id="search-input" placeholder="SEARCH PRODUCTS..." oninput="handleSearch()" />
       <button onclick="toggleSearch()">✕</button>
     </div>
       
@@ -47,18 +50,66 @@
   </div>
 </main>
 
+<!--filter panel-->
+<div class="filter-overlay" id="filter-overlay" onclick="toggleFilter()"></div>
+<div class="filter-panel" id="filter-panel">
+  <div class="filter-panel__header">
+    <p class="filter-panel__title">FILTER</p>
+    <button onclick="toggleFilter()">✕</button>
+  </div>
+
+  <div class="filter-group">
+    <p class="filter-group__title">COLOUR</p>
+    <div class="filter-group__colors">
+      <button class="filter-color-btn" data-color="Onyx Black" onclick="toggleColorFilter('Onyx Black')" title="Onyx Black"> <span style="background:#232325;"></span>Onyx Black</button>
+      <button class="filter-color-btn" data-color="Moss" onclick="toggleColorFilter('Moss')" title="Moss"> <span style="background:#343526;"></span>Moss</button>
+      <button class="filter-color-btn" data-color="Maya Pink" onclick="toggleColorFilter('Maya Pink')" title="Maya Pink"><span style="background:#ffe5e7;"></span>Maya Pink</button>
+      <button class="filter-color-btn" data-color="Quartz White" onclick="toggleColorFilter('Quartz White')" title="Quartz White"> <span style="background:#ffffff; border:1px solid #ccc;"></span>Quartz White</button>
+      <button class="filter-color-btn" data-color="Brown" onclick="toggleColorFilter('Brown')" title="Brown"><span style="background:#5a4a3a;"></span>Brown</button>
+      <button class="filter-color-btn" data-color="Silver" onclick="toggleColorFilter('Silver')" title="Silver"> <span style="background:#888;"></span>Silver</button>
+    </div>
+  </div>
+
+  <div class="filter-group">
+    <p class="filter-group__title">SIZE</p>
+    <div class="filter-group__sizes">
+      <button class="filter-size-btn" data-size="XS" onclick="toggleSizeFilter('XS')">XS</button>
+      <button class="filter-size-btn" data-size="S" onclick="toggleSizeFilter('S')">S</button>
+      <button class="filter-size-btn" data-size="M" onclick="toggleSizeFilter('M')">M</button>
+      <button class="filter-size-btn" data-size="L" onclick="toggleSizeFilter('L')">L</button>
+      <button class="filter-size-btn" data-size="ONE SIZE" onclick="toggleSizeFilter('ONE SIZE')">ONE SIZE</button>
+    </div>
+  </div>
+
+  <div class="filter-panel__footer">
+    <button class="filter-clear-btn" onclick="clearFilters()">CLEAR ALL</button>
+    <button class="filter-apply-btn" onclick="toggleFilter()">APPLY FILTERS</button>
+  </div>
+</div>
   <!--product page--->
   <main class="page" id="page-products">
     <div class="products__bg">
       <p class="breadcrumb"><span onclick="goto('home')">HOME</span>/ ALL PRODUCTS</p>
       <h1 class="products__title">ALL PRODUCTS</h1>
-      <div class="products__toolbar">
-        <div class="products__toolbar-left">
-          <button class="filter-btn">FILTER ▼</button>
-          <span class="showing-count">SHOWING 7/7 PRODUCTS</span>
+
+  <div class="products__toolbar">
+     <div class="products__toolbar-left">
+        <button class="filter-btn" onclick="toggleFilter()">FILTER ✕</button>
+        <span class="showing-count" id="showing-count">SHOWING 7/7 PRODUCTS</span>
+        </div>
+        <div class="sort-wrapper">
+        <button class="sort-btn" onclick="toggleSortDropdown()">
+        <span id="sort-btn-label">SORT ▼</span>
+        </button>
+        <div class="sort-dropdown" id="sort-dropdown">
+          <button onclick="setSort('price-low')">PRICE: LOW TO HIGH</button>
+          <button onclick="setSort('price-high')">PRICE: HIGH TO LOW</button>
+          <button onclick="setSort('default')">DEFAULT</button>
+        </div>
+      </div>
     </div>
-    <button class="sort-btn">ALPHABETICALLY A-Z ▼</button>
-  </div>
+
+
   <div class="product-grid" id="product-grid"></div>
 </div>
 <footer class="footer">
