@@ -79,7 +79,6 @@ function renderCartItems() {
     cartItems.appendChild(li); /*put items into cart*/
     total = total + (item.price * item.quantity);
   }
-
   cartTotal.textContent = "$" + total.toFixed(2) + " AUD";
   updateShippingBar();
 }
@@ -105,7 +104,6 @@ function changeQty(name, amount) {
     removeCartItem(name);
     return;
   }
-
   updateCartBadge();
   renderCartItems();
   saveCart();
@@ -113,7 +111,6 @@ function changeQty(name, amount) {
 
 function removeCartItem(name) {
 const newCart = [];
-
 for (let i = 0; i < cart.length; i++) {
 if (cart[i].name !== name) {
       newCart.push(cart[i]);
@@ -124,6 +121,7 @@ cart = newCart;
 updateCartBadge();
 renderCartItems();
 saveCart();
+renderCheckoutSummary();
 }
 
 function goToCheckout() {
@@ -132,10 +130,7 @@ function goToCheckout() {
 }
     
 
-
-
 /*search bar*/
-
 let activeColors = [];
 let activeSizes  = [];
 let activeSort   = "default";
@@ -154,7 +149,6 @@ function handleSearch() {
   goto("products");
   applyFiltersAndSort();
 }
-
 
 function toggleFilter() {
   document.getElementById("filter-panel").classList.toggle("open");
@@ -702,6 +696,7 @@ function addToCartFromDetail() {
   renderCartItems();
   openCartDrawer();
   saveCart();
+  renderCheckoutSummary();
 }
 
 function renderCheckoutSummary() {
