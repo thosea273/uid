@@ -367,7 +367,7 @@ font-family: 'MyCustomFont'; font-weight: 700; pointer-events: none;
 .hero__img--desktop { display: block; }
 .hotspot--shop{ left: 6.5%;  top: 33%; }
 .hotspot--faq{ left: 70.7%; top: 49%; }
-.hotspot--continu{left: 91.3%; top: 64.5%; }
+.hotspot--continue{left: 91.3%; top: 64.5%; }
 
 @media (max-width: 430px) {
 :root { --nav-h: 48px; }
