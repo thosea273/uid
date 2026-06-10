@@ -1,3 +1,15 @@
+/*local storage*/
+function saveCart() {
+  localStorage.setItem("hound-cart", JSON.stringify(cart));
+}
+
+function loadCart() {
+  const saved = localStorage.getItem("hound-cart");
+  if (saved) {
+  cart =JSON.parse(saved);
+  updateCartBadge();
+  }
+}
 /*checkour*/
 let cart= []
 
@@ -43,30 +55,33 @@ function renderCartItems() {
     const item = cart[i];
 
     const li = document.createElement("li");
-    li.style.cssText = "list-style:none; margin-bottom:18px; padding-bottom:18px; border-bottom:1px solid rgba(0,0,0,0.1);";
+    li.style.cssText = "list-style:none; margin-bottom:18px; padding-bottom:18px; border-bottom:1px solid rgba(0,0,0,0.1); color:#1a1a1a; text-align:left;";
 
     li.innerHTML =
-    "<div style='display:flex; gap:12px; align-items:flex-start;'>" +
-    "<div class='cart-item__swatch' style='background:" + item.color + ";'></div>" +
-    "<div style='flex:1;'>" +
-        "<p class='cart-item__name'>" + item.name + "</p>" +
-        "<p class='cart-item__sub'>" + item.size + " · Pre-order</p>" +
-        "<p class='cart-item__price'>$" + item.price.toFixed(2) + " AUD</p>" +
-    "<div class='qty-control'>" +
-        "<button class='qty-btn' onclick='changeQty(\"" + item.name + "\", -1)'>−</button>" +
-        "<span class='qty-val'>" + item.quantity + "</span>" +
-        "<button class='qty-btn' onclick='changeQty(\"" + item.name + "\", 1)'>+</button>" +
-    "</div>" +
-        "<button class='remove-btn' onclick='removeCartItem(\"" + item.name + "\")'>Remove</button>" +
-        "</div>" +
-        "<p class='cart-item__price'>$" + (item.price * item.quantity).toFixed(2) + "</p>" +
-      "</div>";
+"<div style='display:flex; gap:12px; align-items:flex-start; color:#1a1a1a;'>" +
+"<div class='cart-item__swatch'>" +
+  (item.img ? "<img src='" + item.img + "' style='width:100%;height:100%;object-fit:cover;display:block;'>" : "<div style='width:100%;height:100%;background:" + item.color + ";'></div>") +
+"</div>" +
+"<div style='flex:1; text-align:left; color:#1a1a1a;'>" +
+    "<p style='font-weight:600; font-size:13px; margin-bottom:2px; color:#1a1a1a; text-align:left; font-family:monospace;'>" + item.name + "</p>" +
+    "<p style='font-size:12px; opacity:0.65; margin-bottom:2px; color:#1a1a1a; font-family:monospace;'>" + item.size + " · Pre-order</p>" +
+    "<p style='font-size:13px; font-weight:600; color:#1a1a1a; font-family:monospace;'>$" + item.price.toFixed(2)+ " AUD</p>" +
+    "<div style='display:inline-flex; align-items:center; gap:10px; border:1px solid #1a1a1a; padding:4px 10px; margin-top:10px;'>" +
+    "<button style='background:none;border:none;cursor:pointer;font-size:15px;font-family:monospace;' onclick='changeQty(\"" + item.name + "\", -1)'>−</button>" +
+    "<span style='font-family:monospace; font-size:13px; min-width:18px; text-align:center;'>" + item.quantity + "</span>" +
+    "<button style='background:none;border:none;cursor:pointer;font-size:15px;font-family:monospace;' onclick='changeQty(\"" + item.name + "\", 1)'>+</button>" +
+"</div>" +
+    "<button style='background:none;border:none;margin-left:8px;font-size:12px;opacity:0.45;cursor:pointer;font-family:monospace;color:#1a1a1a;' onclick='removeCartItem(\"" + item.name + "\")'>Remove</button>" +
+"</div>" +
+"<p style='font-size:13px; font-weight:600; white-space:nowrap; font-family:monospace; color:#1a1a1a;'>$" + (item.price * item.quantity).toFixed(2) + "</p>" +
+"</div>";
 
     cartItems.appendChild(li); /*put items into cart*/
     total = total + (item.price * item.quantity);
   }
 
   cartTotal.textContent = "$" + total.toFixed(2) + " AUD";
+  updateShippingBar();
 }
 
 function changeQty(name, amount) {
@@ -93,6 +108,7 @@ function changeQty(name, amount) {
 
   updateCartBadge();
   renderCartItems();
+  saveCart();
 }
 
 function removeCartItem(name) {
@@ -107,6 +123,7 @@ if (cart[i].name !== name) {
 cart = newCart;
 updateCartBadge();
 renderCartItems();
+saveCart();
 }
 
 function goToCheckout() {
@@ -269,11 +286,9 @@ function applyFiltersAndSort() {
   if (activeSort === "price-high") {
   results.sort(function(a, b) { return b.price - a.price; });
   }
-
   updateText("showing-count", "SHOWING " + results.length + "/" + PRODUCTS.length + " PRODUCTS");
   renderFilteredGrid(results);
 }
-
 function renderFilteredGrid(products) {
   const grid = document.getElementById("product-grid");
   if (products.length === 0) {
@@ -306,21 +321,59 @@ function renderProductGrid() {
 
 /*product*/
 let currentPage = "p"; /*masuk memori lg di hlmn mana*/
-  function goto(page) {
-    document.querySelectorAll(".page").forEach(p => {
-      p.classList.remove("active"); /*hide*/
-    });
-  const target = document.getElementById("page-" + page); /*cari di main*/
-
-    if (!target) { console.warn("Page not found:", page); return; }
-
+function goto(page) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.remove("active");
+  });
+  const target = document.getElementById("page-" + page);
+  if (!target) { console.warn("Page not found:", page); return; }
   target.classList.add("active");
-    currentPage = page;
-    window.scrollTo({ top: 0, behavior: "instant" });
+  currentPage = page;
+  window.scrollTo({ top: 0, behavior: "instant" });
 
-    if (page==="products") renderProductGrid();
-    if (page==="checkout") renderCheckoutSummary();
+  const nav = document.querySelector(".nav");
+  if (page === "checkout") {
+    nav.classList.add("nav--checkout");
+  } else{
+    nav.classList.remove("nav--checkout");
+  }
+
+  if (page === "confirm"){
+    const savedEmail = localStorage.getItem("hound-order-email");
+    const emailEl = document.getElementById("confirm-email");
+    if (emailEl && savedEmail) {
+      const masked = savedEmail.replace(/(.{2})(.*)(@.*)/, function(_, a, b, c) {
+      return a + "*".repeat(b.length) + c;
+      });
+      emailEl.textContent = masked;
+  }
+  const itemsEl = document.getElementById("confirm-items");
+  const totalEl = document.getElementById("confirm-total");
+  const savedCart = JSON.parse(localStorage.getItem("hound-last-order") || "[]");
+
+  if (itemsEl &&savedCart.length > 0) {
+let html = "";
+let total = 0;
+  for (let i = 0; i < savedCart.length; i++) {
+    const item = savedCart[i];
+    total = total + (item.price * item.quantity);
+    html = html +
+    "<div class='confirm__item'>" + "<div style='position:relative;'>" +"<span class='confirm__item-badge'>" + item.quantity + "</span>" +
+        (item.img ? "<img src='" + item.img + "'>" : "<div style='width:48px;height:60px;background:" + item.color + ";'></div>") +
+      "</div>" +"<div class='confirm__item-details'>" +"<p class='confirm__item-name'>" + item.name + "</p>" +
+      "<p class='confirm__item-sub'>" + item.size + "</p>" +
+      "</div>" + "<p class='confirm__item-price'>$" + (item.price * item.quantity).toFixed(2) + " AUD</p>" +
+    "</div>";
+    }
+    itemsEl.innerHTML = html;
+    if (totalEl) totalEl.textContent = "$" + total.toFixed(2) + " AUD";
+  }
 }
+
+  if (page === "products") renderProductGrid();
+  if (page === "checkout") renderCheckoutSummary();
+}
+
 
 
 /*data*/
@@ -520,116 +573,42 @@ const PRODUCTS = [
   },
 ];
 
-/*grid*/
-function renderProductGrid() {
-    const grid = document.getElementById("product-grid");
-    grid.innerHTML = PRODUCTS.map(p => {
-    let imgHtml = "";
-    if (p.img) {
-    imgHtml = `<img class="product-card__img" src="${p.img}">`;
-    }else {
-    imgHtml = `
-    <div class="product-card__placeholder"
-    style="background:${p.color}">
-    IMAGE
-    </div>
-    `;
-    }
-       
-    return `
-    <article class="product-card" onclick="openProduct(${p.id})">
-      ${imgHtml}
-      <div class="product-card__info">
-        <p>${p.name}</p>
-        <p>$${p.price.toFixed(2)} ${p.currency}</p>
-      </div>
-    </article>
-  `;
-}).join("");
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
 /*product details*/
 let selectedSize = "XS";
 let selectedSwatch = 0;
 let currentProduct = null;
 
 function openProduct(id) {
-let product = null;
-
-for(let i = 0; i < PRODUCTS.length; i++) {
-if (PRODUCTS[i].id === id) {
-    product = PRODUCTS[i];
-    }
-}
-  if(product === null || product.detail === undefined) {
-  product = PRODUCTS[0];
+  let product = null;
+  for (let i = 0; i < PRODUCTS.length; i++) {
+    if (PRODUCTS[i].id === id) { product = PRODUCTS[i]; }
   }
-
+  if (product === null || product.detail === undefined) { product = PRODUCTS[0]; }
   populateDetail(product);
   goto("detail");
 }
 
 function populateDetail(product) {
-  currentProduct = product; /*store product global*/
+  currentProduct = product;
   let d = product.detail;
+  if (d === undefined) { d = {}; }
 
-  if (d === undefined) {
-    d = {};
-  }
-
-  /* images */
   const imgWrap = document.getElementById("detail-images");
   if (imgWrap && d.images) {
     let html = "";
     for (let i = 0; i < d.images.length; i++) {
-      const src = d.images[i];
       html = html + "<div class='detail__img-wrap'>";
-      html = html + "<img src='" + src + "' class='detail__img' alt='" + product.name + "'>";
-      if (i === 1) {
-        html = html + "<div class='tryon-label'>TRY ON</div>";
-      }
+      html = html + "<img src='" + d.images[i] + "' class='detail__img' alt='" + product.name + "'>";
+      if (i === 1) { html = html + "<div class='tryon-label'>TRY ON</div>"; }
       html = html + "</div>";
     }
     imgWrap.innerHTML = html;
   }
 
   updateText("detail-badge", "PRE-ORDER");
-  if (d.title) {
-    updateText("detail-title", d.title);
-  } else {
-    updateText("detail-title", product.name);
-  }
-
+  updateText("detail-title", d.title || product.name);
   updateText("detail-price", "$" + product.price.toFixed(2) + " " + product.currency);
 
-  /* descriptionn features */
   const descElement = document.getElementById("detail-desc");
   if (descElement) {
     let featureList = "";
@@ -643,16 +622,12 @@ function populateDetail(product) {
     descElement.innerHTML = (d.desc || "") + "<br><br>Features " + featureList;
   }
 
-  /* swatches */
   const swatchWrap = document.getElementById("detail-swatches");
   if (swatchWrap && d.swatches) {
     let html = "";
     for (let i = 0; i < d.swatches.length; i++) {
       const swatch = d.swatches[i];
-      let activeClass = "";
-      if (i === 0) {
-        activeClass = " active";
-      }
+      let activeClass = i === 0 ? " active" : "";
       html = html + "<div class='swatch" + activeClass + "' style='background:" + swatch.color + "' onclick='selectSwatch(" + i + ", this)'></div>";
     }
     swatchWrap.innerHTML = html;
@@ -660,17 +635,12 @@ function populateDetail(product) {
     updateText("swatch-label-text", d.swatches[0].label);
   }
 
-  /* sizes */
   const sizeWrap = document.getElementById("detail-sizes");
   if (sizeWrap && d.sizes) {
     let html = "";
     for (let i = 0; i < d.sizes.length; i++) {
-      const size = d.sizes[i];
-      let activeClass = "";
-      if (i === 0) {
-        activeClass = " active";
-      }
-      html = html + "<button class='size-btn" + activeClass + "' onclick='selectSize(\"" + size + "\", this)'>" + size + "</button>";
+      let activeClass = i === 0 ? " active" : "";
+      html = html + "<button class='size-btn" + activeClass + "' onclick='selectSize(\"" + d.sizes[i] + "\", this)'>" + d.sizes[i] + "</button>";
     }
     sizeWrap.innerHTML = html;
     selectedSize = d.sizes[0];
@@ -679,81 +649,68 @@ function populateDetail(product) {
 
 function selectSwatch(index, element) {
   const allSwatches = document.querySelectorAll(".swatch");
-  for (let i=0; i < allSwatches.length; i++) {
-    allSwatches[i].classList.remove("active");
-  }
+  for (let i = 0; i < allSwatches.length; i++) { allSwatches[i].classList.remove("active"); }
   element.classList.add("active");
   selectedSwatch = index;
   updateText("swatch-label-text", currentProduct.detail.swatches[index].label);
-
-
-const swatch = currentProduct.detail.swatches[index];
+  const swatch = currentProduct.detail.swatches[index];
   if (swatch.images) {
-  const imgWrap = document.getElementById("detail-images");
-  let html = "";
-  for (let i = 0; i < swatch.images.length; i++) {
-    html = html + "<div class='detail__img-wrap'>";
-    html = html + "<img src='" + swatch.images[i] + "' class='detail__img' alt='" + currentProduct.name + "'>";
-    if (i === 1) {
-    html = html + "<div class='tryon-label'>TRY ON</div>";
-  }
-    html = html + "</div>";
-  }
-  imgWrap.innerHTML = html;
+    const imgWrap = document.getElementById("detail-images");
+    let html = "";
+    for (let i = 0; i < swatch.images.length; i++) {
+      html = html +"<div class='detail__img-wrap'>";
+      html = html +"<img src='" + swatch.images[i] + "' class='detail__img' alt='" + currentProduct.name + "'>";
+      if (i===1) { html = html + "<div class='tryon-label'>TRY ON</div>"; }
+      html = html + "</div>";
+    }
+    imgWrap.innerHTML = html;
   }
 }
 
 function selectSize(size, element) {
   const allBtns = document.querySelectorAll(".size-btn");
-  for (let i = 0; i < allBtns.length; i++) {
-    allBtns[i].classList.remove("active");
-  }
+  for (let i = 0; i < allBtns.length; i++) { allBtns[i].classList.remove("active"); }
   element.classList.add("active");
   selectedSize = size;
 }
 
 function addToCartFromDetail() {
   if (!currentProduct) return;
-
   let swatchColor = "#ccc";
+  let swatchLabel = "";
   if (currentProduct.detail && currentProduct.detail.swatches) {
     swatchColor = currentProduct.detail.swatches[selectedSwatch].color;
+    swatchLabel = currentProduct.detail.swatches[selectedSwatch].label;
   }
+  let cartName = currentProduct.name + " " + swatchLabel;
+  let cartImg = currentProduct.detail.swatches[selectedSwatch].images
+    ? currentProduct.detail.swatches[selectedSwatch].images[0]
+    : currentProduct.img;
 
-  /* check if same product + size already in cart */
   let existing = null;
   for (let i = 0; i < cart.length; i++) {
-    if (cart[i].id === currentProduct.id && cart[i].size === selectedSize) {
+    if (cart[i].id === currentProduct.id && cart[i].size === selectedSize && cart[i].name === cartName) {
       existing = cart[i];
     }
   }
-
   if (existing) {
     existing.quantity = existing.quantity + 1;
   } else {
-    cart.push({
-      id:       currentProduct.id,
-      name:     currentProduct.name,
-      price:    currentProduct.price,
-      quantity: 1,
-      size:     selectedSize,
-      color:    swatchColor
-    });
+    cart.push({ id: currentProduct.id, name: cartName, price: currentProduct.price, quantity: 1, size: selectedSize, color: swatchColor, img: cartImg });
   }
-
   updateCartBadge();
   renderCartItems();
   openCartDrawer();
+  saveCart();
 }
 
-/* checkout */
 function renderCheckoutSummary() {
   const container = document.getElementById("checkout-summary-items");
   if (!container) return;
-
   if (cart.length === 0) {
     container.innerHTML = "<p>No items in cart.</p>";
     setEl("summary-subtotal", "$0.00 AUD");
+    setEl("summary-shipping", "Free");
     setEl("summary-total", "$0.00 AUD");
     return;
   }
@@ -767,48 +724,79 @@ function renderCheckoutSummary() {
     subtotal = subtotal + itemTotal;
 
     html = html +
-      "<div class='summary-item'>" +
-      "<div class='summary-item__img' style='background:" + item.color + ";'>" +
-        "<span class='summary-item__qty-badge'>" + item.quantity + "</span>" +
-        "</div>" +
-        "<div class='summary-item__details'>" +
-        "<p class='summary-item__name'>" + item.name + "</p>" +
-        "<p class='summary-item__sub'>$" + item.price.toFixed(2) + " AUD · " + item.size + " · Pre-order</p>" +
-      "</div>" +
-      "<p class='summary-item__price'>$" + itemTotal.toFixed(2) + "</p>" +
-      "</div>";
+    "<div class='summary-item'>" + "<div class='summary-item__img'>" +"<span class='summary-item__qty-badge'>" + item.quantity + "</span>" +
+        (item.img
+          ? "<img src='" + item.img + "' style='width:100%;height:100%;object-fit:cover;display:block;'>"
+          : "<div style='width:100%;height:100%;background:" + item.color + ";'></div>"
+          ) +
+    "</div>" + "<div class='summary-item__details'>" + "<p class='summary-item__name'>" + item.name + "</p>" +
+    "<p class='summary-item__sub'>$" + item.price.toFixed(2) + " AUD · " + item.size + " · Pre-order</p>" +
+    "</div>" +"<p class='summary-item__price'>$" + itemTotal.toFixed(2) + "</p>" +
+    "</div>";
   }
 
   container.innerHTML = html;
-  setElement("summary-subtotal", "$" + subtotal.toFixed(2) + " AUD");
-  setElement("summary-total", "$" + subtotal.toFixed(2) + " AUD");
+
+  const FREE_SHIPPING = 200;
+  const shippingCost = subtotal >= FREE_SHIPPING ? 0 : 15;
+  const shippingLabel = shippingCost === 0 ? "Free" : "$" + shippingCost.toFixed(2) + " AUD";
+  const total = subtotal + shippingCost;
+
+  setEl("summary-subtotal", "$" + subtotal.toFixed(2) + " AUD");
+  setEl("summary-shipping", shippingLabel);
+  setEl("summary-total", "$" + total.toFixed(2) + " AUD");
 }
 
 function placeOrder() {
+  const emailInput = document.getElementById("checkout-email");
+  const email = emailInput ? emailInput.value : "";
+  localStorage.setItem("hound-order-email", email);
+  localStorage.setItem("hound-last-order", JSON.stringify(cart));
+
   cart = [];
   updateCartBadge();
+  localStorage.removeItem("hound-cart"); 
   goto("confirm");
 }
 
-
-
-
-
-
-
-
-
-/* helpers */
-function updateText(id, value) {
-const element = document.getElementById(id);
-  if(element) {
-    element.innerHTML = value;
+function updateShippingBar() {
+const FREE_SHIPPING = 200;
+let total = 0;
+for (let i = 0; i < cart.length; i++) { total = total + (cart[i].price * cart[i].quantity); }
+  const bar = document.getElementById("shipping-bar-fill");
+  const msg = document.getElementById("shipping-msg");
+  if (!bar || !msg) return;
+  if (total >= FREE_SHIPPING) {
+    bar.style.width = "100%";
+    msg.textContent = "You've unlocked free shipping!";
+  } else {
+    const remaining = FREE_SHIPPING - total;
+    bar.style.width = ((total / FREE_SHIPPING) * 100) + "%";
+    bar.style.background = "var(--dark)";
+    msg.textContent = "Spend $" + remaining.toFixed(2) + " AUD more for free shipping";
   }
+}
+
+function filterByCategory(category) {
+  activeColors = []; activeSizes = []; activeSort = "default"; searchQuery = "";
+  goto("products");
+  let results = [];
+  for (let i = 0; i < PRODUCTS.length; i++) {
+  if (category === "jewellery" && PRODUCTS[i].id === 5) { results.push(PRODUCTS[i]); }
+    if (category === "tops" && PRODUCTS[i].id !== 5) { results.push(PRODUCTS[i]); }
+  }
+  updateText("showing-count", "SHOWING " + results.length + "/" + PRODUCTS.length + " PRODUCTS");
+  renderFilteredGrid(results);
+}
+
+function updateText(id, value) {
+  const element = document.getElementById(id);
+  if (element) { element.innerHTML = value; }
 }
 
 function setEl(id, value) {
-const element= document.getElementById(id);
-  if(element) {
-    element.textContent = value;
-  }
+  const element = document.getElementById(id);
+  if (element) { element.textContent = value; }
 }
+
+loadCart();

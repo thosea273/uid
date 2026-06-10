@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hound</title>
-
-  
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,18 +11,19 @@
 <!--nav--->
 <nav class="nav">
   <div class="nav__left">
-      <button class="nav__btn" onclick="goto('products')" >SHOP ▼</button>
+
+    <div class="nav__dropdown">
+      <button class="nav__btn" >SHOP ▼</button>
       <div class="nav__dropdown-menu">
         <button onclick="filterByCategory('tops')">TOPS</button>
         <button onclick="filterByCategory('jewellery')">JEWELLERY</button>
       </div>
     </div>
-
+    <button class="nav__btn">FAQ ▼</button>
+  </div>
     <div class="nav__logo" onclick="goto('home')">
       <img src="logo.png" alt="Hound" />
     </div>
-  
-  
     
     <div class="nav__right">
           <span class="nav__country">AUSTRALIA ▼</span>
@@ -44,9 +44,11 @@
 <main class="page active" id="page-home">
   <div class="hero">
     <img src="bg.png" alt="Hound World Map"/>
-    <button class="hotspot" style="left:6.5%; top:33%;" onclick="goto('products')">SHOP</button>
-    <button class="hotspot" style="left:70.7%; top:49%;">FAQ</button>
-    <button class="hotspot" style="left: 91.3%; top:64.5%;" onclick="goto('products')">CONTINUE<br>SHOPPING</button>
+    <img class="hero__img--mobile" src="mobile.png" alt="Hound World Map"/>
+    <button class="hotspot hotspot--shop" onclick="goto('products')">SHOP</button>
+    <button class="hotspot hotspot--faq">FAQ</button>
+    <button class="hotspot hotspot--continue" onclick="goto('products')">CONTINUE<br>SHOPPING</button>
+
   </div>
 </main>
 
@@ -55,7 +57,7 @@
 <div class="filter-panel" id="filter-panel">
   <div class="filter-panel__header">
     <p class="filter-panel__title">FILTER</p>
-    <button onclick="toggleFilter()">✕</button>
+    <button onclick="toggleFilter()">x</button>
   </div>
 
   <div class="filter-group">
@@ -94,11 +96,11 @@
 
   <div class="products__toolbar">
      <div class="products__toolbar-left">
-        <button class="filter-btn" onclick="toggleFilter()">FILTER ✕</button>
+        <button class="filter-btn" onclick="toggleFilter()">FILTER</button>
         <span class="showing-count" id="showing-count">SHOWING 7/7 PRODUCTS</span>
         </div>
         <div class="sort-wrapper">
-        <button class="sort-btn" onclick="toggleSortDropdown()">
+        <button class="sort-btn">
         <span id="sort-btn-label">SORT ▼</span>
         </button>
         <div class="sort-dropdown" id="sort-dropdown">
@@ -161,7 +163,7 @@
         <div class="form-row">
         <div class="form-field">
         <label>Email</label>
-        <input type="email" placeholder="hound@gmail.com" />
+        <input type="email" id="checkout-email" placeholder="hound@gmail.com" />
         </div>
       </div>
     </div>
@@ -190,7 +192,9 @@
         </div>
         <div class="form-field">
         <label>Postcode</label>
-        <input type="text" />
+        <input type="text" 
+        maxlength="4"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
       </div>
     </div>
   </div>
@@ -199,17 +203,26 @@
         <div class="form-row">
         <div class="form-field">
         <label>Card number</label>
-        <input type="text" placeholder="1234 5678 9012 3456" />
+        <input type="text" placeholder="1234 5678 9012 3456" 
+        oninput="this.value=this.value.replace(/[^0-9\s]/g,'')" maxlength="19" />
         </div>
       </div>
         <div class="form-row">
         <div class="form-field">
         <label>Expiry</label>
-        <input type="text" placeholder="MM / YY" />
+        <input type="text" placeholder="MM / YY"
+        maxlength="7"
+        oninput="
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if(this.value.length > 2) {
+        this.value = this.value.slice(0,2) + ' / ' + this.value.slice(2);
+        }
+        " />
         </div>
         <div class="form-field">
         <label>CVV</label>
-        <input type="text" placeholder="123" />
+        <input type="text" placeholder="123" 
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="4" />
         </div>
       </div>
     </div>
@@ -227,7 +240,7 @@
       </div>
       <div class="summary-row">
         <span>Shipping</span>
-          <span>Free</span>
+        <span id="summary-shipping">Free</span>
         </div>
       <div class="summary-row summary-row--total">
       <span>Total</span>
@@ -239,14 +252,20 @@
 </main>
 
 <!--product page confrim--->
-  <main class="page" id="page-confirm">
-    <div class="confirm-wrap">
-      <h1 class="confirm_title">ORDER<br>CONFIRMED!</h1>
-      <p class="confirm__sub"> Order #12378617263 - Confirmed </p>
-      <button class="btn-back-order" onclick="goto('order')">Go To Your Order</button>
-</div>
-</main>
+ <main class="page" id="page-confirm">
+  <div class="confirm__wrap">
+    <h1 class="confirm__title">ORDER<br>CONFIRMED!</h1>
+    <p class="confirm__sub">Order #12378617263 — Confirmed</p>
+    <div class="confirm__items" id="confirm-items"></div>
 
+    <div class="confirm__total">
+    <span>Total</span>
+    <span id="confirm-total"></span>
+    </div>
+    <p class="confirm__email">Order confirmation sent to <span id="confirm-email"></span></p>
+    <button class="btn-back-home" onclick="goto('home')">BACK TO HOME</button>
+  </div>
+</main>
   <!--half cart--->
   <div class="cart-overlay" id="cart-overlay">
     <div class="cart-backdrop" onclick="closeCartDrawer()"></div>
@@ -256,26 +275,26 @@
       <button class="cart-drawer__close" onclick="closeCartDrawer()">x</button>
       </div>
       <div class="cart-drawer__shipping">
-      Spend $2.00 AUD more for free shipping
-      <div class="shipping-bar"><div class="shipping-bar-fill"></div>
-    </div>
-  </div>
+      <span id="shipping-msg">Spend $200.00 AUD more for free shipping</span>
+       <div class="shipping-bar">
+        <div class="shipping-bar-fill" id="shipping-bar-fill"></div>
+        </div>
+      </div>
       <div class="cart-drawer__items" id="cart-items"></div>
       <div class="cart-drawer__footer">
       <div class="cart-subtotal">
       <span class="cart-subtotal__label">Subtotal</span>
       <span class="cart-subtotal__amount" id="cart-total">...</span>
-      <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
     </div>
+      <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
       <div class="cart-actions">
         <button class="btn-view-cart" onclick="closeCartDrawer()">VIEW CART</button>
-      
         <button class="btn-checkout" onclick="goToCheckout()">CHECKOUT</button>
-
           </div>
       </div>
     </div>
-</div>
+  </div>
+   
 
 
 
